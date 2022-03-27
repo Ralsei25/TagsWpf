@@ -1,0 +1,46 @@
+﻿<Window x:Class="TagsWpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TagsWpf.Views"
+        xmlns:vm="clr-namespace:TagsWpf.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800"
+        >
+    <DockPanel  >
+        <Grid HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,0,0,5">
+                <TextBlock Text="Искомый тег" />
+                <TextBox HorizontalAlignment="Left" Width="300" Text="{Binding SearchTag}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBox IsEnabled="False" Width="300" Text="{Binding UrlsFilePath}"></TextBox>
+                <Button Command="{Binding LoadSitesListCommand}">Выбрать файл</Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button Margin="5" Command="{Binding AddSiteCommand}">Добавить сайт</Button>
+                <Button Margin="5" Command="{Binding RemoveSelectedSiteCommand}">Удалить сайт</Button>
+                <Button Margin="5" Command="{Binding LoadAllSitesCommand}">Загрузить все сайты</Button>
+                <Button Margin="5" Command="{Binding CancelCommand}">Отмена загрузки</Button>
+            </StackPanel>
+        </Grid>
+        <WrapPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <Label Content="Общее количетсво тегов: "/>
+            <Label Content="{Binding TagsAmount}"/>
+            <StackPanel Margin="0,5">
+                <ProgressBar Width="100" Height="20" Maximum="100" Value="{Binding AllLoadProgress, Mode=OneWay}" Foreground="{Binding AllStatusColor}"/>
+                <Label Content="{Binding AllLoadStatus}"/>
+            </StackPanel>
+            <Button Content="БЫСТРЕЕ!!!!" Margin="10,5" Command="{Binding FasterCommand}"/>
+        </WrapPanel>
+
+        <local:SitesListView  ItemsSource="{Binding SitesList}" />
+    </DockPanel>
+</Window>
+
